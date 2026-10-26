@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Skins",
+  "version": "2.0.0",
+  "description": "Create, save and apply soft gradient skins to Helium. AI optional.",
+  "permissions": [
+    "management",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Skins",
+    "default_icon": {
+      "16": "icon-16.png",
+      "32": "icon-32.png",
+      "48": "icon-48.png"
+    }
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "host_permissions": [
+    "http://127.0.0.1:4872/*",
+    "https://api.anthropic.com/*"
+  ],
+  "options_page": "settings.html"
+}

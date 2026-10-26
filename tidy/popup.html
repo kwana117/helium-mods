@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tidy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --fundo: #1e2027; --linha: #2c2f38; --texto: #ecedf1; --suave: #9ea2ae; --acento: #8f88c9; --perigo: #e0707a; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; width: 300px; padding: 16px; background: var(--fundo); color: var(--texto); font: 13px/1.5 "Plus Jakarta Sans", system-ui, sans-serif; }
+    h1 { font: 600 17px/1 "Geologica", system-ui, sans-serif; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; }
+    h1 img { width: 20px; height: 20px; }
+    p { margin: 0; color: var(--suave); }
+    svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    button {
+      font: inherit; color: var(--texto); background: #262830; border: 1px solid var(--linha);
+      border-radius: 10px; padding: 9px 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; width: 100%;
+    }
+    button:hover { border-color: #444857; }
+    button:disabled { opacity: .6; cursor: progress; }
+    .principal { background: var(--acento); border-color: transparent; color: #15141c; font-weight: 600; margin-top: 14px; }
+    .principal.a-pensar svg { animation: pulsar 1s ease-in-out infinite; }
+    @keyframes pulsar { 50% { opacity: .3; transform: scale(.85); } }
+    #resultado { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 6px; }
+    #resultado li { display: flex; align-items: center; gap: 10px; }
+    #resultado .cor { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+    #resultado .n { margin-left: auto; color: var(--suave); font-variant-numeric: tabular-nums; }
+    #estado { margin-top: 10px; min-height: 1.5em; }
+    #estado.erro { color: var(--perigo); }
+    #desfazer { margin-top: 10px; }
+    .atalho { margin-top: 12px; font-size: 11px; color: #6a6e7c; }
+    h1 .engrenagem { margin-left: auto; width: auto; padding: 5px; background: none; border: none; color: var(--suave); }
+    h1 .engrenagem:hover { color: var(--texto); }
+    .secundario { margin-top: 8px; }
+    .dica { margin-top: 10px; font-size: 12px; }
+    .dica a { color: var(--acento); }
+  </style>
+</head>
+<body>
+  <h1><img src="icon-32.png" alt="">Tidy
+    <button id="definicoes" class="engrenagem" title="Settings" aria-label="Settings">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </h1>
+  <p id="resumo">Looking at this window…</p>
+  <button id="agrupar" class="principal" disabled>
+    <svg viewBox="0 0 24 24" id="icone-principal"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg><span id="rotulo-principal">Group by topic</span>
+  </button>
+  <button id="por-site" class="secundario" hidden>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Group by site
+  </button>
+  <p id="dica-ia" class="dica" hidden>Want groups by topic? <a href="#" id="ligar-ia">Turn on AI in Settings</a>.</p>
+  <ul id="resultado"></ul>
+  <p id="estado" role="status"></p>
+  <p id="atalho" class="atalho"></p>
+  <button id="desfazer" hidden>
+    <svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5M4 9h11a5 5 0 0 1 0 10h-3"/></svg>Undo
+  </button>
+  <script src="ext.js"></script>
+  <script src="ai.js"></script>
+  <script src="tidy.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

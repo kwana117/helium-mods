@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skins</title>
+  <link rel="icon" href="icon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <aside class="galeria">
+    <header>
+      <h1>Skins</h1>
+      <div class="botoes-topo">
+        <button id="definicoes" class="icone" title="Settings" aria-label="Settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+        </button>
+        <button id="nova" class="icone" title="New skin" aria-label="New skin">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </header>
+    <form id="criar-ia" class="criar-ia" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>
+      <input id="descricao" type="text" maxlength="300" placeholder="Describe a new skin…" title="E.g. sunset over the river" aria-label="Skin description">
+      <button type="submit" id="criar" class="icone" title="Create with AI" aria-label="Create with AI">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+    <ul id="lista"></ul>
+  </aside>
+
+  <main>
+    <section class="palco">
+      <div class="janela" id="janela">
+        <div class="lateral">
+          <div class="semaforos"><i></i><i></i><i></i></div>
+          <div class="fixo">Dashboards</div>
+          <div class="sep">Gmail</div>
+          <div class="sep ativo">WhatsApp</div>
+          <div class="grupo">Project · notes</div>
+          <div class="sep">GitHub</div>
+          <div class="sep">Invoices</div>
+        </div>
+        <div class="pagina">
+          <div class="endereco">mail.google.com</div>
+          <div class="conteudo"></div>
+        </div>
+      </div>
+      <p class="nota">Approximate preview. Helium may show the sidebar in a flat colour instead of the gradient.</p>
+    </section>
+
+    <section class="controlos">
+      <div class="linha-nome">
+        <svg class="lapis" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg>
+        <input id="nome" class="nome-skin" type="text" maxlength="18" placeholder="Name it" aria-label="Skin name" spellcheck="false">
+        <button id="sugerir-nome" class="icone ia" hidden title="Suggest a name with AI" aria-label="Suggest a name with AI">
+          <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>
+        </button>
+      </div>
+
+      <div class="bloco">
+        <div class="rotulo">Colours</div>
+        <div class="faixa" id="faixa"></div>
+        <div class="pontos">
+          <button type="button" class="ponto" data-i="0" aria-label="Start colour"><span></span><small>Start</small></button>
+          <button type="button" class="ponto" data-i="1" aria-label="Middle colour"><span></span><small>Middle</small></button>
+          <button type="button" class="ponto" data-i="2" aria-label="End colour"><span></span><small>End</small></button>
+        </div>
+        <div class="rotulo pequeno">Suggestions</div>
+        <div class="sugestoes" id="sugestoes"></div>
+      </div>
+
+      <div class="bloco">
+        <div class="rotulo">Direction <output id="angulo-v"></output></div>
+        <div class="direcao">
+          <div class="mostrador" id="mostrador" aria-hidden="true"><i></i></div>
+          <input id="angulo" type="range" min="0" max="360" step="5" aria-label="Direction">
+        </div>
+      </div>
+
+      <div class="bloco">
+        <div class="rotulo">Grain <output id="grao-v"></output></div>
+        <input id="grao" type="range" min="0" max="20" step="1" aria-label="Grain">
+      </div>
+
+      <div class="acoes">
+        <button id="guardar" title="Save">
+          <svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5zM8 4v5h7V4M8 20v-6h8v6"/></svg>Save
+        </button>
+        <button id="duplicar" title="Duplicate">
+          <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Duplicate
+        </button>
+        <button id="apagar" class="perigo icone" title="Delete" aria-label="Delete">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
+        </button>
+      </div>
+
+      <button id="aplicar" class="principal">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>Apply to Helium
+      </button>
+      <p id="estado" class="estado" role="status"></p>
+      <button id="extensoes" class="ligacao" hidden>Open extensions to reload the theme</button>
+    </section>
+  </main>
+
+  <div id="seletor" class="seletor" hidden>
+    <div class="sv" id="sv"><i id="sv-cursor"></i></div>
+    <input id="matiz" class="matiz" type="range" min="0" max="360" step="1" aria-label="Hue">
+    <div class="seletor-baixo">
+      <span id="seletor-amostra" class="seletor-amostra"></span>
+      <input id="hex" class="hex" type="text" maxlength="7" spellcheck="false" aria-label="Colour code">
+    </div>
+    <div id="recentes" class="recentes"></div>
+  </div>
+
+  <script src="ext.js"></script>
+  <script src="ai.js"></script>
+  <script src="zip.js"></script>
+  <script src="seletor.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>

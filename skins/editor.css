@@ -1,0 +1,234 @@
+:root {
+  --fundo: #16171c;
+  --painel: #1e2027;
+  --linha: #2c2f38;
+  --texto: #ecedf1;
+  --suave: #9ea2ae;
+  --acento: #8f88c9;
+  --perigo: #e0707a;
+  --raio: 12px;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background: var(--fundo);
+  color: var(--texto);
+  font: 14px/1.5 "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+h1 { font: 600 20px/1 "Geologica", system-ui, sans-serif; margin: 0; }
+
+svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+button {
+  font: inherit;
+  color: var(--texto);
+  background: var(--painel);
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  padding: 9px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+button:hover { border-color: #444857; }
+button.icone { padding: 7px; }
+button.principal { width: 100%; justify-content: center; background: var(--acento); border-color: transparent; color: #15141c; font-weight: 600; padding: 12px; }
+button.perigo { color: var(--perigo); }
+button.ligacao { background: none; border: none; color: var(--acento); padding: 0; text-decoration: underline; }
+
+/* Galeria */
+.galeria { border-right: 1px solid var(--linha); padding: 20px 14px; overflow-y: auto; max-height: 100vh; }
+.galeria header { display: flex; align-items: center; justify-content: space-between; margin: 0 6px 18px; }
+#lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+#lista li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px; border-radius: 10px; cursor: pointer;
+}
+#lista li:hover { background: var(--painel); }
+#lista li.ativa { background: var(--painel); outline: 1px solid var(--linha); }
+#lista .amostra { width: 36px; height: 36px; border-radius: 9px; flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+#lista .nome { font-weight: 500; }
+#lista .aplicada { font-size: 12px; color: var(--acento); }
+
+/* Palco */
+main { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; padding: 28px; align-items: start; }
+.palco { min-width: 0; }
+.janela {
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  background-size: cover;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06);
+  transition: background-image .2s;
+}
+.lateral { padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--texto-skin, #fff); }
+.semaforos { display: flex; gap: 7px; margin-bottom: 10px; }
+.semaforos i { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.35); }
+.lateral div:not(.semaforos) { padding: 7px 10px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lateral .fixo { background: rgba(255,255,255,.14); margin-bottom: 8px; }
+.lateral .ativo { background: var(--ativo-skin, rgba(255,255,255,.22)); color: var(--ativo-texto, inherit); }
+.lateral .grupo { background: rgba(255,255,255,.10); font-weight: 600; }
+.pagina { padding: 12px 12px 12px 0; display: flex; flex-direction: column; gap: 10px; }
+.endereco { background: var(--ativo-skin, rgba(0,0,0,.18)); color: var(--ativo-texto, #fff); border-radius: 8px; padding: 6px 12px; font-size: 12px; }
+.conteudo { flex: 1; background: #1b1c20; border-radius: 10px; }
+.nota { color: var(--suave); font-size: 12px; margin: 14px 2px 0; }
+
+/* Controlos */
+input { min-width: 0; font: inherit; }
+.controlos {
+  min-width: 0;
+  background: linear-gradient(180deg, #23252d, #1e2027);
+  border: 1px solid var(--linha);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+}
+.controlos > * { min-width: 0; }
+
+.linha-nome { display: flex; align-items: center; gap: 8px; }
+.linha-nome .lapis { flex: none; color: var(--suave); width: 15px; height: 15px; }
+.nome-skin {
+  flex: 1;
+  width: 100%;
+  font: 600 20px/1.2 "Geologica", system-ui, sans-serif;
+  color: var(--texto);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  padding: 2px 0 6px;
+  outline: none;
+}
+.nome-skin:hover { border-bottom-color: var(--linha); }
+.nome-skin:focus { border-bottom-color: var(--acento); }
+
+.bloco { display: flex; flex-direction: column; gap: 12px; }
+.rotulo { display: flex; justify-content: space-between; align-items: baseline; color: var(--suave); font-size: 12px; font-weight: 500; letter-spacing: .02em; }
+.rotulo.pequeno { margin-top: 2px; }
+.rotulo output { color: var(--texto); font-variant-numeric: tabular-nums; }
+
+.faixa { height: 34px; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+
+.pontos { display: flex; justify-content: space-between; padding: 0 4px; }
+.ponto { display: flex; flex-direction: column; align-items: center; gap: 6px; background: none; border: none; padding: 0; }
+.ponto:hover { border: none; }
+.ponto.aberto span { box-shadow: 0 0 0 3px #2a2c35, 0 0 0 5px var(--acento), 0 4px 14px rgba(0,0,0,.35); }
+.ponto span {
+  width: 38px; height: 38px; border-radius: 50%;
+  box-shadow: 0 0 0 3px #2a2c35, 0 0 0 4px rgba(255,255,255,.12), 0 4px 14px rgba(0,0,0,.35);
+  transition: transform .15s;
+}
+.ponto:hover span { transform: scale(1.08); }
+.ponto small { font-size: 11px; color: var(--suave); }
+
+.sugestoes { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.sugestoes button {
+  padding: 0; height: 26px; border-radius: 8px; border: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+  transition: transform .15s;
+}
+.sugestoes button:hover { transform: translateY(-2px); }
+
+.direcao { display: flex; align-items: center; gap: 14px; }
+.mostrador {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--fundo); box-shadow: inset 0 0 0 1px var(--linha);
+  position: relative;
+}
+.mostrador i {
+  position: absolute; left: 50%; top: 5px; width: 2px; height: 12px; margin-left: -1px;
+  background: var(--texto); border-radius: 2px; transform-origin: 50% 12px;
+}
+
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--acento) var(--p, 50%), #3a3d48 var(--p, 50%)); }
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%;
+  background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+
+.acoes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 8px; }
+.acoes button { justify-content: center; padding: 9px 8px; font-size: 13px; }
+.acoes button.icone { padding: 9px 11px; }
+
+button.principal {
+  width: 100%; justify-content: center; padding: 13px;
+  border: none; color: #fff; font-weight: 600; font-size: 15px;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.15), 0 8px 24px rgba(0,0,0,.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+button.principal:hover { filter: brightness(1.08); }
+button.principal:disabled { opacity: .6; cursor: progress; }
+
+.estado { margin: -10px 0 0; font-size: 13px; color: var(--suave); min-height: 1.5em; }
+.estado.erro { color: var(--perigo); }
+
+@media (max-width: 900px) {
+  body { grid-template-columns: 1fr; }
+  .galeria { border-right: none; border-bottom: 1px solid var(--linha); max-height: none; }
+  main { grid-template-columns: 1fr; padding: 16px; }
+}
+
+.nome-skin::placeholder { color: #5d6170; }
+button.ia { color: var(--acento); flex: none; }
+
+/* Criar com IA */
+.criar-ia {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 16px; padding: 6px 6px 6px 12px;
+  background: var(--painel); border: 1px solid var(--linha); border-radius: 12px;
+}
+.criar-ia > svg { flex: none; color: var(--acento); }
+.criar-ia input { flex: 1; min-width: 0; color: var(--texto); background: none; border: none; outline: none; font-size: 13px; padding: 6px 0; }
+.criar-ia input::placeholder { color: #6a6e7c; }
+.criar-ia:focus-within { border-color: var(--acento); }
+.criar-ia button { flex: none; }
+
+.a-pensar { pointer-events: none; }
+.a-pensar svg, .criar-ia.a-pensar > svg { animation: pulsar 1s ease-in-out infinite; }
+@keyframes pulsar { 50% { opacity: .3; transform: scale(.85); } }
+
+/* Seletor de cor */
+.seletor {
+  position: absolute; z-index: 10; width: 240px; padding: 14px;
+  background: #23252d; border: 1px solid var(--linha); border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.5);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.sv { position: relative; height: 150px; border-radius: 10px; cursor: crosshair; touch-action: none; }
+.sv i {
+  position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.5); pointer-events: none;
+}
+.matiz { height: 14px; }
+.seletor input.matiz::-webkit-slider-runnable-track {
+  height: 10px; border-radius: 6px;
+  background: linear-gradient(90deg, red, #ff0, lime, cyan, blue, #f0f, red);
+}
+.seletor input.matiz::-webkit-slider-thumb { margin-top: -3px; }
+.seletor-baixo { display: flex; align-items: center; gap: 10px; }
+.seletor-amostra { flex: none; width: 30px; height: 30px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.hex {
+  flex: 1; min-width: 0; color: var(--texto); background: var(--fundo);
+  border: 1px solid var(--linha); border-radius: 8px; padding: 6px 10px;
+  font: 500 13px/1.4 ui-monospace, "SF Mono", monospace; text-transform: lowercase;
+}
+.hex:focus { outline: none; border-color: var(--acento); }
+.recentes { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+.recentes:empty { display: none; }
+.recentes button { padding: 0; aspect-ratio: 1; border-radius: 5px; border: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+
+.galeria header .botoes-topo { display: flex; gap: 6px; }

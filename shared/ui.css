@@ -1,0 +1,108 @@
+/* helium-mods: shared look for Settings and the welcome guide. */
+:root {
+  --fundo: #16171c;
+  --painel: #1e2027;
+  --painel-2: #23252d;
+  --linha: #2c2f38;
+  --texto: #ecedf1;
+  --suave: #9ea2ae;
+  --apagado: #6a6e7c;
+  --acento: #8f88c9;
+  --ok: #7cc49a;
+  --perigo: #e0707a;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0; min-height: 100vh; background: var(--fundo); color: var(--texto);
+  font: 14px/1.55 "Plus Jakarta Sans", system-ui, sans-serif;
+}
+h1, h2 { font-family: "Geologica", system-ui, sans-serif; font-weight: 600; margin: 0; }
+h1 { font-size: 24px; }
+h2 { font-size: 16px; }
+a { color: var(--acento); }
+svg.i { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+.pagina { max-width: 640px; margin: 0 auto; padding: 40px 20px 60px; }
+.cabeca { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+.cabeca img { width: 44px; height: 44px; border-radius: 11px; }
+.cabeca p { margin: 2px 0 0; color: var(--suave); }
+
+.cartao { background: var(--painel); border: 1px solid var(--linha); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+.cartao > h2 { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.cartao > .sub { color: var(--suave); margin: 0 0 16px; }
+
+.linha { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--linha); }
+.linha:first-of-type { border-top: none; }
+.linha .txt { flex: 1; min-width: 0; }
+.linha .txt b { display: block; font-weight: 600; }
+.linha .txt span { color: var(--suave); font-size: 13px; }
+.linha.desligada .txt { opacity: .45; }
+
+/* Interruptor */
+.interruptor { position: relative; width: 42px; height: 24px; flex: none; }
+.interruptor input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+.interruptor span { position: absolute; inset: 0; border-radius: 12px; background: #3a3d48; transition: background .15s; }
+.interruptor span::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; transition: transform .15s; box-shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+.interruptor input:checked + span { background: var(--acento); }
+.interruptor input:checked + span::after { transform: translateX(18px); }
+.interruptor input:disabled { cursor: not-allowed; }
+.interruptor input:disabled + span { opacity: .4; }
+.interruptor input:focus-visible + span { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+/* Estado da ligação */
+.pilula { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; padding: 4px 11px; border-radius: 999px; background: var(--painel-2); }
+.pilula::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--apagado); }
+.pilula.ok::before { background: var(--ok); }
+.pilula.erro::before { background: var(--perigo); }
+
+/* Campos e botões */
+.campo-chave { display: flex; gap: 8px; margin-top: 12px; }
+.campo-chave .entrada { flex: 1; position: relative; display: flex; }
+input[type=password], input[type=text].chave {
+  width: 100%; font: 500 13px/1.4 ui-monospace, "SF Mono", monospace; color: var(--texto);
+  background: var(--fundo); border: 1px solid var(--linha); border-radius: 10px; padding: 10px 38px 10px 12px;
+}
+input.chave:focus, input[type=password]:focus { outline: none; border-color: var(--acento); }
+.ver { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--suave); padding: 6px; cursor: pointer; }
+button.b {
+  font: inherit; color: var(--texto); background: var(--painel-2); border: 1px solid var(--linha);
+  border-radius: 10px; padding: 9px 14px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap;
+}
+button.b:hover { border-color: #444857; }
+button.b:disabled { opacity: .55; cursor: default; }
+button.b.principal { background: var(--acento); border-color: transparent; color: #15141c; font-weight: 600; }
+button.b.perigo { color: var(--perigo); }
+.botoes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.msg { margin: 10px 0 0; font-size: 13px; color: var(--suave); min-height: 1.3em; }
+.msg.ok { color: var(--ok); }
+.msg.erro { color: var(--perigo); }
+
+.escolha { display: grid; gap: 8px; margin-top: 4px; }
+.escolha label { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--linha); border-radius: 10px; cursor: pointer; }
+.escolha label:has(input:checked) { border-color: var(--acento); background: rgba(143,136,201,.08); }
+.escolha input { margin-top: 3px; accent-color: var(--acento); }
+.escolha span { color: var(--suave); font-size: 13px; display: block; }
+
+.nota { display: flex; gap: 10px; color: var(--suave); font-size: 13px; margin: 0; }
+.nota + .nota { margin-top: 10px; }
+.nota svg { margin-top: 2px; color: var(--acento); }
+
+/* Guia */
+.guia { max-width: 560px; margin: 0 auto; padding: 56px 20px; min-height: 100vh; display: flex; flex-direction: column; }
+.passos-topo { display: flex; gap: 6px; margin-bottom: 28px; }
+.passos-topo i { flex: 1; height: 4px; border-radius: 4px; background: var(--linha); transition: background .2s; }
+.passos-topo i.feito { background: var(--acento); }
+.passo { flex: 1; animation: entrar .25s ease; }
+@keyframes entrar { from { opacity: 0; transform: translateY(6px); } }
+.passo .icone-grande { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: var(--painel-2); color: var(--acento); margin-bottom: 20px; }
+.passo .icone-grande svg { width: 30px; height: 30px; }
+.passo h1 { font-size: 26px; margin-bottom: 10px; }
+.passo p { color: var(--suave); font-size: 15px; margin: 0 0 12px; }
+.passo kbd { font: 600 13px ui-monospace, monospace; background: var(--painel-2); border: 1px solid var(--linha); border-bottom-width: 2px; border-radius: 6px; padding: 2px 7px; color: var(--texto); }
+.passo ul { color: var(--suave); padding-left: 20px; margin: 0 0 12px; }
+.navegar { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+.opcional { font: 500 11px/1 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--suave); background: var(--painel-2); border-radius: 999px; padding: 4px 8px; margin-left: 4px; }

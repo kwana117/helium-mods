@@ -1,0 +1,90 @@
+{
+  "theme" : {
+    "images" : {
+      "theme_frame" : "images\/frame.png",
+      "theme_ntp_background" : "images\/frame.png",
+      "theme_toolbar" : "images\/toolbar.png",
+      "theme_frame_inactive" : "images\/frame.png"
+    },
+    "properties" : {
+      "ntp_background_alignment" : "center",
+      "ntp_background_repeat" : "no-repeat"
+    },
+    "colors" : {
+      "omnibox_background" : [
+        60,
+        61,
+        80
+      ],
+      "bookmark_text" : [
+        255,
+        255,
+        255
+      ],
+      "frame" : [
+        41,
+        43,
+        61
+      ],
+      "tab_text" : [
+        255,
+        255,
+        255
+      ],
+      "toolbar_button_icon" : [
+        255,
+        255,
+        255
+      ],
+      "ntp_background" : [
+        41,
+        43,
+        61
+      ],
+      "tab_background_text" : [
+        168,
+        168,
+        181
+      ],
+      "tab_background_text_inactive" : [
+        168,
+        168,
+        181
+      ],
+      "toolbar" : [
+        45,
+        46,
+        67
+      ],
+      "frame_inactive" : [
+        33,
+        35,
+        53
+      ],
+      "omnibox_text" : [
+        255,
+        255,
+        255
+      ],
+      "background_tab" : [
+        41,
+        43,
+        61
+      ],
+      "ntp_text" : [
+        255,
+        255,
+        255
+      ],
+      "background_tab_inactive" : [
+        33,
+        35,
+        53
+      ]
+    }
+  },
+  "manifest_version" : 3,
+  "description" : "Skin \"Night\", made with the Skins editor.",
+  "name" : "Helium Skin",
+  "version" : "1.0.25"
+}

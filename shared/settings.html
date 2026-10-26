@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings</title>
+  <link rel="icon" href="icon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+  <main class="pagina">
+    <header class="cabeca">
+      <img src="icon-128.png" alt="">
+      <div>
+        <h1><span id="nome-ext"></span> settings</h1>
+        <p>Everything works without AI. Turn it on only if you want the extras.</p>
+      </div>
+    </header>
+
+    <section class="cartao">
+      <h2><svg class="i" viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>AI features</h2>
+      <p class="sub">Uses Claude by Anthropic, with your own key. Each use costs a fraction of a cent.</p>
+      <div class="linha">
+        <div class="txt"><b>Use AI</b><span>Master switch. Off means nothing ever leaves your browser.</span></div>
+        <label class="interruptor"><input type="checkbox" id="ai-ligada" aria-label="Use AI"><span></span></label>
+      </div>
+      <div id="funcoes"></div>
+    </section>
+
+    <section class="cartao" id="cartao-ligacao">
+      <h2><svg class="i" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Connection</h2>
+      <p class="sub"><span id="estado-ligacao" class="pilula">Checking…</span></p>
+
+      <div class="linha" style="display:block">
+        <div class="txt"><b>Your Anthropic API key</b>
+          <span>Get one at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> → API Keys → Create Key. It starts with <code>sk-ant-</code>.</span>
+        </div>
+        <div class="campo-chave">
+          <div class="entrada">
+            <input type="password" id="chave" class="chave" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" aria-label="API key">
+            <button class="ver" id="ver" type="button" title="Show or hide" aria-label="Show or hide the key">
+              <svg class="i" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <button class="b principal" id="guardar-chave" type="button">Save</button>
+        </div>
+        <div class="botoes">
+          <button class="b" id="testar" type="button" hidden>
+            <svg class="i" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Test key
+          </button>
+          <button class="b perigo" id="apagar-chave" type="button" hidden>
+            <svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Remove key
+          </button>
+        </div>
+        <p class="msg" id="msg-chave" role="status"></p>
+      </div>
+
+      <div class="linha" style="display:block" id="bloco-fonte">
+        <div class="txt"><b>Where the key comes from</b></div>
+        <div class="escolha">
+          <label><input type="radio" name="fonte" value="auto"><div><b>Automatic</b><span>Use the Mac helper when it is running, otherwise the key above.</span></div></label>
+          <label><input type="radio" name="fonte" value="key"><div><b>Only the key above</b><span>Simplest. The key stays in this extension.</span></div></label>
+          <label><input type="radio" name="fonte" value="helper"><div><b>Only the Mac helper</b><span>Most private: the key stays in the macOS Keychain. Needs Hammerspoon (see the README).</span></div></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Mac helper <span class="opcional">optional</span></h2>
+      <p class="sub"><span id="estado-ajudante" class="pilula">Checking…</span></p>
+      <p class="nota"><svg class="i" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span><b>Apply in one click.</b> The skin changes straight away, no zip to unzip and install.</span></p>
+      <p class="nota"><svg class="i" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span><b>Key in the macOS Keychain.</b> AI can use the key kept by your Mac instead of one pasted in the browser.</span></p>
+      <p class="nota"><svg class="i" viewBox="0 0 24 24"><path d="M12 8v4M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg><span>It's a small script for <a href="https://www.hammerspoon.org/" target="_blank" rel="noopener">Hammerspoon</a>, a free Mac app. You don't need it: without it everything still works. Set-up steps are in the README, under "Optional: the Mac helper".</span></p>
+      <div class="botoes" id="bloco-ligar" hidden>
+        <button class="b principal" id="ligar-ajudante" type="button">
+          <svg class="i" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>Connect
+        </button>
+      </div>
+      <p class="msg" id="txt-ajudante" role="status"></p>
+    </section>
+
+    <section class="cartao">
+      <h2><svg class="i" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Privacy</h2>
+      <p class="nota"><svg class="i" viewBox="0 0 24 24"><path d="M12 8v4M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg><span>Your key is stored only in this extension, on this Mac. It is never synced and only ever sent to api.anthropic.com. Websites and other extensions cannot read it.</span></p>
+      <p class="nota"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="o-que-sai"></span></p>
+    </section>
+
+    <section class="cartao">
+      <h2><svg class="i" viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM8 7h6"/></svg>Help</h2>
+      <div class="botoes">
+        <button class="b" id="abrir-guia" type="button">
+          <svg class="i" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9z"/></svg>Open the welcome guide
+        </button>
+      </div>
+    </section>
+  </main>
+  <script src="ext.js"></script>
+  <script src="ai.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
