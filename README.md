@@ -128,3 +128,10 @@ sync-shared.sh Copies shared/ into each extension
 
 Edit the shared files in `shared/`, then run `./sync-shared.sh`. Never edit the copies inside `skins/` or `tidy/`.
 No build step and no dependencies: plain HTML, CSS and JavaScript (Manifest V3).
+
+---
+
+## License
+
+[MIT](LICENSE). Use it, change it, share it; just keep the copyright notice.
+Not affiliated with Helium, Arc or Anthropic.
