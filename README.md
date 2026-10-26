@@ -10,6 +10,8 @@ Bring back the things you miss from Arc, and make Helium look like yours.
 
 **Everything works without AI.** AI is an optional extra you turn on in Settings, with your own Anthropic key.
 
+![The Skins editor: saved skins on the left, a live preview in the middle, colours, direction and grain on the right](docs/skins-editor.png)
+
 ---
 
 ## Install (5 minutes)
@@ -28,6 +30,8 @@ You need Helium and this folder on your Mac.
 
 Each extension opens a short welcome guide the first time. You can open it again from its Settings → Help.
 
+<p align="center"><img src="docs/welcome.png" width="560" alt="The welcome guide, one step at a time"></p>
+
 ---
 
 ## Using it
@@ -42,12 +46,16 @@ Each extension opens a short welcome guide the first time. You can open it again
 Without it, **Apply** downloads a `helium-skin-….zip`. Unzip it, then in `helium://extensions` click **Load unpacked** and pick the `helium-skin` folder. Next time, replace that folder and press the reload icon on its card.
 
 ### Tidy
+<img src="docs/tidy.png" width="300" align="right" alt="Tidy after sorting five tabs into Gmail, GitHub and Other">
+
 - Press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>G</kbd> in any window, or click the Tidy icon and press the button.
 - **Without AI** it groups by site: Gmail with Gmail, GitHub with GitHub. Nothing leaves your browser.
 - **With AI** it groups by topic, like *Shopping* or *Project X*.
 - Pinned tabs and groups you already have are never touched.
 - Changed your mind? Open Tidy and press **Undo** (works for 30 minutes).
 - Change the shortcut at `helium://extensions/shortcuts`.
+
+<br clear="right">
 
 ---
 
@@ -63,6 +71,8 @@ It uses Claude by Anthropic. Each use costs a fraction of a cent, on your own ac
 4. Use the switches to turn each AI feature on or off. The **Use AI** switch turns them all off at once.
 
 Each extension has its own Settings, so paste the key in Skins and in Tidy.
+
+<p align="center"><img src="docs/settings.png" width="560" alt="Settings: AI switches, your key, and where the key comes from"></p>
 
 **Is my key safe?**
 - It is stored only inside that extension, on your Mac. It is never synced.
