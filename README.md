@@ -46,6 +46,9 @@ Each extension opens a short welcome guide the first time. You can open it again
 Without it, **Apply** downloads a `helium-skin-….zip`. Unzip it, then in `helium://extensions` click **Load unpacked** and pick the `helium-skin` folder. Next time, replace that folder and press the reload icon on its card.
 
 ### Tidy
+![Before and after Tidy: eleven loose tabs become groups for GitHub, Gmail, Figma, Docs and Other](docs/tidy-before-after.png)
+<sub>Illustration of the sidebar, grouping by site.</sub>
+
 <img src="docs/tidy.png" width="300" align="right" alt="Tidy after sorting five tabs into Gmail, GitHub and Other">
 
 - Press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>G</kbd> in any window, or click the Tidy icon and press the button.
