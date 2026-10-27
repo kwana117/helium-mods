@@ -7,6 +7,7 @@ Bring back the things you miss from Arc, and make Helium look like yours.
 |---|---|
 | **Skins** | Soft gradient looks for Helium, like Arc. Make your own, save them, switch in one click. |
 | **Tidy** | Sorts the loose tabs in a window into groups. One shortcut: <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>G</kbd>. |
+| **Folders** | Arc-style folders in a side panel. Save pages into folders instead of pinning them: <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>S</kbd>. |
 
 **Everything works without AI.** AI is an optional extra you turn on in Settings, with your own Anthropic key.
 
@@ -25,6 +26,7 @@ You need Helium and this folder on your Mac.
 4. **Add each extension.** Click **Load unpacked** and pick a folder. Do it once for each:
    - `skins` → the Skins editor
    - `tidy` → Tidy
+   - `folders` → Folders
    - `theme` → the theme Skins writes to (only if you will use the Mac helper, see below)
 5. **Pin them.** Click the puzzle icon at the top right of Helium and press the pin next to **Skins** and **Tidy**.
 
@@ -44,6 +46,17 @@ Each extension opens a short welcome guide the first time. You can open it again
 
 **Applying:** with the Mac helper (below), the window changes straight away.
 Without it, **Apply** downloads a `helium-skin-….zip`. Unzip it, then in `helium://extensions` click **Load unpacked** and pick the `helium-skin` folder. Next time, replace that folder and press the reload icon on its card.
+
+### Folders
+- Click the **Folders** icon (or press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>F</kbd>) to open the panel on the side.
+- **New folder** makes a folder inside the one you selected. Click a folder to open or close it; the selected one has a line on the left.
+- Press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>S</kbd> to save the page you're on: type a few letters of the folder (or a new name) and press Enter. Or right-click the page → **Save to Folders** → pick the folder. The **Save** button puts it in the selected folder.
+- After saving, Folders asks if you want to close the tab, so the page moves into the folder instead of staying open.
+- Drag pages and folders to reorder them or move them into another folder.
+- Right-click a folder, a page or an empty spot for New folder, Rename, Delete and more.
+- Click a saved page to go to it; if it's already open, Folders switches to that tab. <kbd>⌘</kbd>-click opens it in the background.
+- **Organize** (the sparkle button, needs AI) asks Claude where each saved page belongs. You see the plan first; press **Apply**, and **Undo** puts everything back.
+- Double-click to rename. Everything is kept in Helium's own bookmarks, in a folder called **Folders**, so nothing is lost if you remove the extension.
 
 ### Tidy
 ![Before and after Tidy: eleven loose tabs become groups for GitHub, Gmail, Figma, Docs and Other](docs/tidy-before-after.png)
@@ -114,6 +127,8 @@ A small [Hammerspoon](https://www.hammerspoon.org/) script that makes two things
 The helper only listens on your own Mac (`127.0.0.1`). It only answers extensions you allowed in step 7: websites, other extensions and other programs are refused. It builds the theme itself and only accepts colours and real PNG images.
 
 ---
+
+**Personal context (optional).** Folders can sort pages after your real projects and clients. Put a short description of them in `~/.config/helium-mods/context.md`, or a program at `~/.config/helium-mods/context` that prints it (for example, built from your notes). The helper hands it to Folders when you press Organize. Nothing in this repository reads your notes.
 
 ## Troubleshooting
 

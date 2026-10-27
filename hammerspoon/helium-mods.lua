@@ -5,6 +5,11 @@
 --      the window changes colour with one click.
 --   2. Talks to Claude with the API key kept in the macOS Keychain, so the
 --      key never lives inside the browser.
+--   3. Optionally hands extensions a short personal context (your projects,
+--      clients, topics) so AI features can sort things the way you think.
+--      It comes from ~/.config/helium-mods/context (a program you write,
+--      whose output is used) or ~/.config/helium-mods/context.md. Nothing
+--      in this repository reads your notes; with neither file, it's empty.
 -- Without this helper everything still works: Skins offers "Download theme"
 -- and the AI features use a key pasted in each extension's Settings.
 --
@@ -25,6 +30,7 @@ local PORT = 4872
 -- Keychain item that holds the Anthropic API key (service name).
 local KEYCHAIN_SERVICE = "anthropic-api-key"
 local MODEL = "claude-haiku-5-5"
+local CONTEXT_DIR = os.getenv("HOME") .. "/.config/helium-mods"
 
 -- Load these up front: loading an extension for the first time inside the
 -- server callback overflows the stack.
@@ -107,11 +113,12 @@ end
 local function askClaude(p)
   local key = apiKey()
   if not key then error("NO_KEY") end
-  local prompt = tostring(p.prompt or ""):sub(1, 20000)
+  local prompt = tostring(p.prompt or ""):sub(1, 40000)
+  local maxTokens = math.max(256, math.min(tonumber(p.max_tokens) or 2048, 8000))
   if prompt == "" or type(p.schema) ~= "table" then error("bad request") end
   local body = hs.json.encode({
     model = MODEL,
-    max_tokens = 2048,
+    max_tokens = maxTokens,
     output_config = { effort = "low", format = { type = "json_schema", schema = p.schema } },
     messages = { { role = "user", content = prompt } },
   })
@@ -127,6 +134,19 @@ local function askClaude(p)
     if block.type == "text" then return { result = hs.json.decode(block.text) } end
   end
   error("empty answer")
+end
+
+-- Your personal context, if you set one up (see the top of this file).
+local function context()
+  local prog = CONTEXT_DIR .. "/context"
+  local text = ""
+  if fs.attributes(prog, "mode") == "file" and hs.execute("test -x '" .. prog .. "' && echo y"):find("y") then
+    text = hs.execute("'" .. prog .. "' 2>/dev/null") or ""
+  else
+    local f = io.open(CONTEXT_DIR .. "/context.md", "r")
+    if f then text = f:read("*a") or ""; f:close() end
+  end
+  return { context = text:sub(1, 12000) }
 end
 
 -- The theme manifest is built here, never taken from the request: only
@@ -192,6 +212,7 @@ local ROUTES = {
   ["/ping"] = function() return { hasKey = apiKey() ~= nil } end,
   ["/pair"] = true, -- handled below, needs the origin
   ["/claude"] = askClaude,
+  ["/context"] = context,
   ["/apply"] = applyTheme,
 }
 

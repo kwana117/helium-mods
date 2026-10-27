@@ -94,14 +94,14 @@ const HM = (() => {
   }
 
   // One question with a JSON schema; returns the parsed JSON object.
-  async function ask(prompt, schema) {
+  async function ask(prompt, schema, { maxTokens = 2048 } = {}) {
     const via = await connection();
     if (!via) throw new Error("AI is not connected. Add your key in Settings.");
 
     if (via === "helper") {
       let r;
       try {
-        r = await helper("/claude", { prompt, schema });
+        r = await helper("/claude", { prompt, schema, max_tokens: maxTokens }, 120000);
       } catch {
         throw new Error("The Mac helper did not answer.");
       }
@@ -123,7 +123,7 @@ const HM = (() => {
         },
         body: JSON.stringify({
           model: MODEL,
-          max_tokens: 2048,
+          max_tokens: maxTokens,
           output_config: { effort: "low", format: { type: "json_schema", schema } },
           messages: [{ role: "user", content: prompt }],
         }),
@@ -159,5 +159,15 @@ const HM = (() => {
     return { ok: true, msg: "The key works." };
   }
 
-  return { get, save, getKey, setKey, clearKey, maskKey, looksLikeKey, helper, helperStatus, pairHelper, connection, aiReady, ask, testKey };
+  // Personal context from the Mac helper (empty if it has none or isn't connected).
+  async function context() {
+    try {
+      const r = await helper("/context", {}, 8000);
+      return r.ok ? String(r.context || "") : "";
+    } catch {
+      return "";
+    }
+  }
+
+  return { context, get, save, getKey, setKey, clearKey, maskKey, looksLikeKey, helper, helperStatus, pairHelper, connection, aiReady, ask, testKey };
 })();

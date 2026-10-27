@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Folders</title>
+  <style>
+    :root {
+      --fundo: #1e2027; --hover: rgba(255,255,255,.06); --ativo: rgba(255,255,255,.11);
+      --linha: #2c2f38; --texto: #ecedf1; --suave: #9ea2ae; --apagado: #6a6e7c; --acento: #8f88c9; --perigo: #e0707a;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body { margin: 0; background: var(--fundo); color: var(--texto); font: 13px/1.4 system-ui, -apple-system, sans-serif; display: flex; flex-direction: column; user-select: none; }
+    svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+    header { display: flex; gap: 6px; padding: 10px 10px 6px; }
+    header button {
+      font: inherit; color: var(--texto); background: var(--hover); border: none; border-radius: 9px;
+      padding: 7px 10px; display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    }
+    header button:hover { background: var(--ativo); }
+    #guardar { flex: 1; justify-content: flex-start; min-width: 0; }
+    #guardar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #guardar b { font-weight: 600; }
+
+    #rolo { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    #lista { padding: 2px 6px 24px; min-height: 80px; }
+
+    #pergunta { padding: 10px 12px; border-top: 1px solid var(--linha); background: #23252d; }
+    #pergunta p { margin: 0 0 8px; }
+    #pergunta div { display: flex; gap: 6px; }
+    #pergunta button { flex: 1; font: inherit; color: var(--texto); background: var(--hover); border: none; border-radius: 8px; padding: 7px 8px; cursor: pointer; }
+    #pergunta button:hover { background: var(--ativo); }
+    #pergunta button.sim { background: var(--acento); color: #15141c; font-weight: 600; }
+
+    #menu {
+      position: fixed; z-index: 10; min-width: 190px; padding: 5px; border-radius: 10px;
+      background: #2a2c35; border: 1px solid #3a3d48; box-shadow: 0 8px 24px rgba(0,0,0,.45);
+    }
+    #menu button {
+      display: flex; align-items: center; gap: 9px; width: 100%; font: inherit; color: var(--texto); background: none;
+      border: none; border-radius: 6px; padding: 6px 9px; cursor: pointer; text-align: left;
+    }
+    #menu button:hover, #menu button:focus-visible { background: var(--acento); color: #15141c; outline: none; }
+    #menu button.perigo { color: var(--perigo); }
+    #menu button.perigo:hover { background: var(--perigo); color: #15141c; }
+    #menu hr { border: none; border-top: 1px solid #3a3d48; margin: 4px 2px; }
+
+    #organizar.a-pensar svg { animation: pulsar 1s ease-in-out infinite; color: var(--acento); }
+    @keyframes pulsar { 50% { opacity: .3; transform: scale(.85); } }
+    #plano { position: fixed; inset: 0; z-index: 5; background: var(--fundo); display: flex; flex-direction: column; padding: 12px; }
+    #plano h2 { font-size: 15px; margin: 2px 4px 6px; display: flex; align-items: center; gap: 8px; }
+    #plano h2 svg { color: var(--acento); }
+    #plano-resumo { margin: 0 4px 10px; color: var(--suave); }
+    #plano-lista { flex: 1; overflow-y: auto; margin: 0 -4px; }
+    .grupo { margin-bottom: 10px; }
+    .grupo h3 { font-size: 12px; font-weight: 600; margin: 0; padding: 4px 8px; display: flex; align-items: center; gap: 7px; }
+    .grupo h3 .nova { font-size: 10px; font-weight: 600; color: #15141c; background: var(--acento); border-radius: 4px; padding: 0 5px; }
+    .grupo .item { height: 30px; cursor: default; }
+    .grupo .de { font-size: 11px; color: var(--apagado); white-space: nowrap; max-width: 40%; overflow: hidden; text-overflow: ellipsis; }
+    #plano .botoes { display: flex; gap: 6px; padding-top: 10px; border-top: 1px solid var(--linha); }
+    #plano .botoes button { flex: 1; font: inherit; color: var(--texto); background: var(--hover); border: none; border-radius: 8px; padding: 8px; cursor: pointer; }
+    #plano .botoes button.sim { background: var(--acento); color: #15141c; font-weight: 600; }
+    #estado a { color: var(--acento); }
+
+    #escolha { position: fixed; inset: 0; z-index: 6; background: var(--fundo); display: flex; flex-direction: column; padding: 12px; }
+    #escolha .rotulo { margin: 2px 4px 2px; font-size: 15px; font-weight: 600; }
+    #escolha-pagina { margin: 0 4px 10px; color: var(--suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #escolha-campo {
+      font: inherit; color: var(--texto); background: #262830; border: 1px solid var(--acento); border-radius: 9px;
+      padding: 8px 10px; outline: none; margin-bottom: 8px;
+    }
+    #escolha-lista { flex: 1; overflow-y: auto; }
+    .opcao {
+      display: flex; align-items: center; gap: 9px; width: 100%; font: inherit; color: var(--texto); background: none; border: none;
+      border-radius: 8px; padding: 7px 9px; cursor: pointer; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .opcao svg { color: var(--suave); }
+    .opcao:hover { background: var(--hover); }
+    .opcao.marcada { background: var(--acento); color: #15141c; font-weight: 600; }
+    .opcao.marcada svg { color: #15141c; }
+    #escolha .dica { margin: 8px 4px 0; font-size: 11px; color: var(--apagado); display: flex; align-items: center; gap: 6px; }
+    #escolha .dica button { margin-left: auto; font: inherit; color: var(--suave); background: var(--hover); border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; }
+    .vazio { color: var(--suave); padding: 14px 10px; line-height: 1.55; }
+    .vazio kbd { font: 11px ui-monospace, monospace; background: var(--hover); padding: 1px 5px; border-radius: 4px; }
+
+    .item {
+      display: flex; align-items: center; gap: 9px; height: 34px; padding: 0 8px; border-radius: 9px;
+      cursor: pointer; position: relative;
+    }
+    .item:hover { background: var(--hover); }
+    .item.destino > .nome { font-weight: 600; }
+    .item.destino::after { content: ""; position: absolute; left: 0; top: 9px; bottom: 9px; width: 3px; border-radius: 2px; background: var(--acento); }
+    .item.aberto-agora { background: var(--ativo); }
+    .item img, .item .ico { width: 16px; height: 16px; flex: none; color: var(--suave); }
+    .item .nome { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pasta > .item .nome { font-weight: 600; }
+    .acoes { display: none; gap: 2px; }
+    .item:hover .acoes { display: flex; }
+    .acoes button { background: none; border: none; color: var(--suave); padding: 4px; border-radius: 6px; cursor: pointer; display: flex; }
+    .acoes button:hover { color: var(--texto); background: var(--hover); }
+    .acoes button.apagar:hover { color: var(--perigo); }
+    .filhos { padding-left: 14px; margin-left: 15px; border-left: 1px solid var(--linha); }
+    .pasta:not(.aberta) > .filhos { display: none; }
+    .item input {
+      flex: 1; min-width: 0; font: inherit; color: var(--texto); background: var(--fundo);
+      border: 1px solid var(--acento); border-radius: 6px; padding: 3px 6px; outline: none;
+    }
+
+    .item.alvo-dentro { background: rgba(143,136,201,.25); }
+    .item.alvo-antes { box-shadow: inset 0 2px 0 var(--acento); }
+    #lista.alvo-raiz { background: rgba(143,136,201,.08); }
+    .a-arrastar { opacity: .4; }
+
+    footer { padding: 8px 12px; font-size: 11px; color: var(--apagado); border-top: 1px solid var(--linha); }
+    #estado:empty { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="guardar" title="Save this page into the selected folder (⌥⇧S)">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Save to <b id="destino-nome">Folders</b></span>
+    </button>
+    <button id="organizar" title="Organize with AI" aria-label="Organize with AI">
+      <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>
+    </button>
+    <button id="nova-pasta" title="New folder" aria-label="New folder">
+      <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg>
+    </button>
+  </header>
+  <main id="rolo">
+    <div id="lista" role="tree"></div>
+  </main>
+  <div id="pergunta" hidden>
+    <p id="pergunta-txt"></p>
+    <div><button id="fechar-tab" class="sim">Close tab</button><button id="manter-tab">Keep it open</button></div>
+  </div>
+  <footer id="estado" role="status"></footer>
+  <div id="menu" role="menu" hidden></div>
+
+  <section id="escolha" hidden aria-label="Choose a folder">
+    <p class="rotulo">Save to which folder?</p>
+    <p id="escolha-pagina"></p>
+    <input id="escolha-campo" type="text" placeholder="Type to find or create a folder" autocomplete="off" spellcheck="false">
+    <div id="escolha-lista"></div>
+    <p class="dica">↑ ↓ to move · Enter to save · Esc to cancel <button id="escolha-cancelar">Cancel</button></p>
+  </section>
+
+  <section id="plano" hidden aria-label="AI plan">
+    <h2><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z"/></svg>Organize</h2>
+    <p id="plano-resumo"></p>
+    <div id="plano-lista"></div>
+    <div class="botoes">
+      <button id="plano-aplicar" class="sim">Apply</button>
+      <button id="plano-cancelar">Cancel</button>
+    </div>
+  </section>
+
+  <template id="t-pasta">
+    <div class="pasta" role="treeitem">
+      <div class="item" draggable="true">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span class="nome"></span>
+        <span class="acoes">
+          <button class="aqui" title="Save this page here"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+          <button class="sub" title="New folder inside"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg></button>
+          <button class="renomear" title="Rename"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+          <button class="apagar" title="Delete folder"><svg viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg></button>
+        </span>
+      </div>
+      <div class="filhos" role="group"></div>
+    </div>
+  </template>
+
+  <template id="t-link">
+    <div class="item link" draggable="true" role="treeitem">
+      <img alt="">
+      <span class="nome"></span>
+      <span class="acoes">
+        <button class="renomear" title="Rename"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+        <button class="apagar" title="Remove"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </span>
+    </div>
+  </template>
+
+  <script src="store.js"></script>
+  <script src="ext.js"></script>
+  <script src="ai.js"></script>
+  <script src="organize.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>

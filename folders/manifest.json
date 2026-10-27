@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "Folders",
+  "version": "0.3.0",
+  "description": "Arc-style folders in a side panel. Save pages into folders instead of pinning them.",
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "storage",
+    "sidePanel",
+    "favicon",
+    "contextMenus"
+  ],
+  "action": {
+    "default_title": "Folders",
+    "default_icon": {
+      "16": "icon-16.png",
+      "32": "icon-32.png",
+      "48": "icon-48.png"
+    }
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+F",
+        "mac": "Alt+Shift+F"
+      },
+      "description": "Open the Folders panel"
+    },
+    "guardar": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Save this page: choose the folder"
+    }
+  },
+  "host_permissions": [
+    "http://127.0.0.1:4872/*",
+    "https://api.anthropic.com/*"
+  ],
+  "options_page": "settings.html"
+}
