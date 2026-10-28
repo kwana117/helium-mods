@@ -19,7 +19,24 @@ async function marcar(texto, cor, titulo) {
 // O painel lê o pedido quando abre (ou logo, se já estiver aberto).
 const pedir = (pedido) => chrome.storage.session.set({ pedido: { ...pedido, quando: Date.now() } });
 
+// ---------- abrir e fechar o painel (⌥⇧F) ----------
+// Cada painel aberto liga-se aqui e diz de que janela é; assim o atalho sabe
+// se tem de abrir ou fechar. Fechar = pedir ao painel dessa janela que se feche.
+
+const paineis = new Set();
+chrome.runtime.onConnect.addListener((porta) => {
+  if (porta.name !== "painel") return;
+  let janela = null;
+  porta.onMessage.addListener((m) => { if (m.windowId) { janela = m.windowId; paineis.add(janela); } });
+  porta.onDisconnect.addListener(() => { if (janela) paineis.delete(janela); });
+});
+
 chrome.commands.onCommand.addListener(async (comando, tab) => {
+  if (comando === "alternar") {
+    const janela = tab?.windowId ?? (await chrome.windows.getLastFocused()).id;
+    if (paineis.has(janela)) return chrome.runtime.sendMessage({ tipo: "fechar", windowId: janela }).catch(() => {});
+    return chrome.sidePanel.open({ windowId: janela }).catch(() => {});
+  }
   if (comando !== "guardar") return;
   // Abrir o painel tem de ser já, antes de qualquer espera, senão o Helium recusa.
   if (tab) chrome.sidePanel.open({ windowId: tab.windowId }).catch(() => {});

@@ -64,6 +64,18 @@
     #plano .botoes button.sim { background: var(--acento); color: #15141c; font-weight: 600; }
     #estado a { color: var(--acento); }
 
+    #atalhos { margin: 0 10px 8px; padding: 10px 12px; border-radius: 10px; background: #23252d; border: 1px solid var(--linha); }
+    #atalhos ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+    #atalhos li { display: flex; align-items: center; gap: 10px; }
+    #atalhos li span { flex: 1; color: var(--suave); }
+    #atalhos kbd { font: 600 12px ui-monospace, "SF Mono", monospace; color: var(--texto); background: var(--hover); border: 1px solid var(--linha); border-radius: 6px; padding: 2px 7px; white-space: nowrap; }
+    #atalhos kbd.falta { color: var(--perigo); font-weight: 400; }
+    #atalhos .mais { margin: 10px 0 0; font-size: 12px; color: var(--apagado); }
+    #atalhos .botoes { display: flex; gap: 6px; margin-top: 10px; }
+    #atalhos .botoes button { flex: 1; font: inherit; color: var(--texto); background: var(--hover); border: none; border-radius: 8px; padding: 6px 8px; cursor: pointer; }
+    #atalhos .botoes button:hover { background: var(--ativo); }
+    #ver-atalhos.ligado { background: var(--ativo); color: var(--acento); }
+
     #escolha { position: fixed; inset: 0; z-index: 6; background: var(--fundo); display: flex; flex-direction: column; padding: 12px; }
     #escolha .rotulo { margin: 2px 4px 2px; font-size: 15px; font-weight: 600; }
     #escolha-pagina { margin: 0 4px 10px; color: var(--suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -128,7 +140,15 @@
     <button id="nova-pasta" title="New folder" aria-label="New folder">
       <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg>
     </button>
+    <button id="ver-atalhos" title="Keyboard shortcuts" aria-label="Keyboard shortcuts">
+      <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>
+    </button>
   </header>
+  <section id="atalhos" hidden aria-label="Keyboard shortcuts">
+    <ul id="atalhos-lista"></ul>
+    <p class="mais">Right-click any page → <b>Save to Folders</b> · right-click in this panel for New folder, Rename, Delete.</p>
+    <div class="botoes"><button id="mudar-atalhos">Change shortcuts</button><button id="fechar-atalhos">Close</button></div>
+  </section>
   <main id="rolo">
     <div id="lista" role="tree"></div>
   </main>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Folders",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Arc-style folders in a side panel. Save pages into folders instead of pinning them.",
   "permissions": [
     "bookmarks",
@@ -32,12 +32,12 @@
     "service_worker": "background.js"
   },
   "commands": {
-    "_execute_action": {
+    "alternar": {
       "suggested_key": {
         "default": "Alt+Shift+F",
         "mac": "Alt+Shift+F"
       },
-      "description": "Open the Folders panel"
+      "description": "Open or close the Folders panel"
     },
     "guardar": {
       "suggested_key": {

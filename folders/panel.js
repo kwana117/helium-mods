@@ -595,6 +595,56 @@ chrome.storage.onChanged.addListener((m, area) => {
   if (m.destinoId) { destinoId = m.destinoId.newValue || raizId; redesenhar(); }
 });
 
+// ---------- ligação ao fundo (para o ⌥⇧F saber fechar) ----------
+
+let janelaId = null;
+let porta = null;
+function ligar() {
+  porta = chrome.runtime.connect({ name: "painel" });
+  if (janelaId) porta.postMessage({ windowId: janelaId });
+  porta.onDisconnect.addListener(() => setTimeout(ligar, 200));
+}
+chrome.windows.getCurrent().then((w) => { janelaId = w.id; ligar(); });
+// Um sinal de vida a cada 20 s mantém o fundo acordado enquanto o painel está aberto.
+setInterval(() => { try { porta?.postMessage({ windowId: janelaId }); } catch {} }, 20000);
+chrome.runtime.onMessage.addListener((m) => {
+  if (m.tipo === "fechar" && m.windowId === janelaId) window.close();
+});
+
+// ---------- atalhos (para não te esqueceres) ----------
+// Mostra os atalhos tal como estão agora no Helium, mesmo que os tenhas mudado.
+
+const caixaAtalhos = document.getElementById("atalhos");
+const botaoAtalhos = document.getElementById("ver-atalhos");
+const NOMES = { alternar: "Open or close this panel", guardar: "Save this page to a folder" };
+const bonito = (k) => k.replace(/⌥|Alt/g, "⌥").replace(/⇧|Shift/g, "⇧").replace(/⌘|Command/g, "⌘").replace(/MacCtrl|Ctrl|⌃/g, "⌃").replace(/\+/g, " ");
+
+async function mostrarAtalhos(mostrar = caixaAtalhos.hidden) {
+  caixaAtalhos.hidden = !mostrar;
+  botaoAtalhos.classList.toggle("ligado", mostrar);
+  if (!mostrar) return;
+  const comandos = await chrome.commands.getAll();
+  document.getElementById("atalhos-lista").replaceChildren(...comandos.filter((c) => NOMES[c.name]).map((c) => {
+    const li = document.createElement("li");
+    const t = document.createElement("span");
+    t.textContent = NOMES[c.name];
+    const k = document.createElement("kbd");
+    k.textContent = c.shortcut ? bonito(c.shortcut) : "Not set";
+    if (!c.shortcut) k.className = "falta";
+    li.append(t, k);
+    return li;
+  }));
+}
+
+botaoAtalhos.onclick = () => mostrarAtalhos();
+document.getElementById("fechar-atalhos").onclick = () => mostrarAtalhos(false);
+document.getElementById("mudar-atalhos").onclick = () => chrome.tabs.create({ url: "chrome://extensions/shortcuts" });
+
+(async () => {
+  // Se algum atalho ficou sem tecla (o Helium já a usava), o cartão abre sozinho a avisar.
+  if ((await chrome.commands.getAll()).some((c) => NOMES[c.name] && !c.shortcut)) mostrarAtalhos(true);
+})();
+
 (async () => {
   raizId = await FS.root();
   destinoId = await FS.destino();

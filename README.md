@@ -48,7 +48,7 @@ Each extension opens a short welcome guide the first time. You can open it again
 Without it, **Apply** downloads a `helium-skin-….zip`. Unzip it, then in `helium://extensions` click **Load unpacked** and pick the `helium-skin` folder. Next time, replace that folder and press the reload icon on its card.
 
 ### Folders
-- Click the **Folders** icon (or press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>F</kbd>) to open the panel on the side.
+- Click the **Folders** icon, or press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>F</kbd>, to open the panel on the side. The same shortcut closes it. The keyboard button at the top of the panel lists every shortcut.
 - **New folder** makes a folder inside the one you selected. Click a folder to open or close it; the selected one has a line on the left.
 - Press <kbd>⌥ Option</kbd> <kbd>⇧ Shift</kbd> <kbd>S</kbd> to save the page you're on: type a few letters of the folder (or a new name) and press Enter. Or right-click the page → **Save to Folders** → pick the folder. The **Save** button puts it in the selected folder.
 - After saving, Folders asks if you want to close the tab, so the page moves into the folder instead of staying open.
